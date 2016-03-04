@@ -6,8 +6,10 @@ resources = PIXI.loader.resources,
 TextureCache = PIXI.utils.TextureCache,
 Texture = PIXI.Texture,
 Sprite = PIXI.Sprite;
-CARDA_PNG="imgs/card2.png";
-CARDB_PNG="imgs/card5.png";
+CARD_BASE="imgs/card2.png";
+CARD_CHICKEN="imgs/tyuk.png";
+CARD_WIG="imgs/konty.png";
+CARD_LEVEL="imgs/card5.png";
 SCREEN_W=1024;
 SCREEN_H=768;
 charm = new Charm(PIXI);
@@ -20,8 +22,10 @@ document.body.appendChild(renderer.view);
 
 //load a JSON file and run the `setup` function when it's done
 loader
-.add(CARDA_PNG)
-.add(CARDB_PNG)
+.add(CARD_BASE)
+.add(CARD_CHICKEN)
+.add(CARD_WIG)
+.add(CARD_LEVEL)
 .load(setup);
 
 //Define variables that might be used in more
@@ -32,8 +36,8 @@ var cardA,cardB,sprite_animation,plier,card_to_filp;
 
 
 function setup() {
-  cardA=getCard(1);
-  cardB=getCard(0);
+  cardA=getCard(1,0);
+  cardB=getCard(0,0);
   stage.addChild(cardA);
   stage.addChild(cardB);
   //Render the stage
@@ -61,9 +65,11 @@ function randomInt(min, max) {
 }
 
 
-function getCard (side){
-  var card=new Sprite(resources[CARDA_PNG].texture);
-  card.otherside=resources[CARDB_PNG].texture;
+function getCard (side,level){
+  var base= level==0?  resources[CARD_BASE].texture:resources[CARD_LEVEL].texture;
+  var baseOther=side==0 ? resources[CARD_WIG].texture:resources[CARD_CHICKEN].texture;
+  var card=new Sprite(base);
+  card.otherside=baseOther;
   card.isFlipped=false;
   var res= side ? getLEFTXY(card.width,card.height): getRightXY(card.width,card.height);
   card.x=res.x;
@@ -72,7 +78,6 @@ function getCard (side){
   var cal=partial(onButtonDown,card)
   card.on('mousedown',cal);
   card.on('touchstart', cal);
-  console.log(card.scale.x)
   return card;
 }
 
@@ -102,10 +107,22 @@ if(!p.isFlipped){
   plier=-1;
   card_to_filp=p;
   p.isFlipped=true;
-} else {
-  charm.scale(p,p.scale.x,scaleBy(p.scale.y,0.5),60);
 
-  charm.walkPath( p,  getWaypoints(p),  100,  "smoothstep",   false,  false,  200 );
+} else {
+
+  charm.walkPath( p,  getWaypoints(p),  120,  "smoothstep",   false,  false,  200 )
+  p.interactive=false;
+  charm.scale(p,p.scale.x,scaleBy(p.scale.y,0.5),120).onComplete=function ()
+  {
+      if(cardA.isFlipped&&cardB.isFlipped){
+        console.log("fatom");
+        cardA=getCard(1);
+        cardB=getCard(0);
+        stage.addChild(cardA);
+        stage.addChild(cardB);
+      }
+  }
+
 }
 }
 

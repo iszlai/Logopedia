@@ -1,3 +1,61 @@
+//config
+
+var levels=[ {
+  'front':'imgs/card2.png',
+  'backA':'imgs/tyuk.png',
+  'backB':'imgs/konty.png',
+},
+{
+'front':'imgs/card2.png',
+  'backA':'imgs/pityo.png',
+  'backB':'imgs/csengo.png',
+},
+{
+'front':'imgs/card2.png',
+  'backA':'imgs/kigyo.png',
+  'backB':'imgs/gyufa.png',
+},
+{
+'front':'imgs/card2.png',
+  'backA':'imgs/gyongy.png',
+  'backB':'imgs/kagylo.png',
+},
+{
+'front':'imgs/card5.png',
+  'backA':'imgs/kutya.png',
+  'backB':'imgs/tolgy.png',
+},
+{
+'front':'imgs/card5.png',
+  'backA':'imgs/pitypang.png',
+  'backB':'imgs/meggy.png',
+},
+{
+'front':'imgs/card5.png',
+  'backA':'imgs/kesztyu.png',
+  'backB':'imgs/gyuru.png',
+},
+{
+'front':'imgs/card5.png',
+  'backA':'imgs/mond1.png',
+  'backB':'imgs/mond2.png',
+},
+{
+'front':'imgs/card5.png',
+  'backA':'imgs/mond3.png',
+  'backB':'imgs/mond4.png',
+}];
+
+function getImgs(){
+  return levels.map( function(d){
+                return [d.backA,d.backB];})
+         .reduce( function (a,b){
+                    return [].concat(a).concat(b);
+                  });
+}
+
+
+
 //Aliases
 var Container = PIXI.Container,
 autoDetectRenderer = PIXI.autoDetectRenderer,
@@ -7,25 +65,24 @@ TextureCache = PIXI.utils.TextureCache,
 Texture = PIXI.Texture,
 Sprite = PIXI.Sprite;
 CARD_BASE="imgs/card2.png";
-CARD_CHICKEN="imgs/tyuk.png";
-CARD_WIG="imgs/konty.png";
 CARD_LEVEL="imgs/card5.png";
 SCREEN_W=1024;
 SCREEN_H=768;
 charm = new Charm(PIXI);
 //Create a Pixi stage and renderer and add the
 //renderer.view to the DOM
-var stage = new Container(),
+stage = new Container(),
+currentLevel=0;
 renderer = autoDetectRenderer(SCREEN_W, SCREEN_H);
+
 renderer.backgroundColor=0xF9FBE7;
 document.body.appendChild(renderer.view);
 
 //load a JSON file and run the `setup` function when it's done
 loader
 .add(CARD_BASE)
-.add(CARD_CHICKEN)
-.add(CARD_WIG)
 .add(CARD_LEVEL)
+.add(getImgs())
 .load(setup);
 
 //Define variables that might be used in more
@@ -65,11 +122,12 @@ function randomInt(min, max) {
 }
 
 
-function getCard (side,level){
-  var base= level==0?  resources[CARD_BASE].texture:resources[CARD_LEVEL].texture;
-  var baseOther=side==0 ? resources[CARD_WIG].texture:resources[CARD_CHICKEN].texture;
-  var card=new Sprite(base);
-  card.otherside=baseOther;
+function getCard (side){
+  var current=levels[currentLevel];
+  var frontTexture=resources[current.front].texture;
+  var backTexture=side ? resources[current.backA].texture : resources[current.backB].texture;
+  var card=new Sprite(frontTexture);
+  card.otherside=backTexture;
   card.isFlipped=false;
   var res= side ? getLEFTXY(card.width,card.height): getRightXY(card.width,card.height);
   card.x=res.x;
@@ -116,6 +174,7 @@ if(!p.isFlipped){
   {
       if(cardA.isFlipped&&cardB.isFlipped){
         console.log("fatom");
+        currentLevel++;
         cardA=getCard(1);
         cardB=getCard(0);
         stage.addChild(cardA);

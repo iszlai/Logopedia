@@ -172,8 +172,9 @@ if(!p.isFlipped){
   p.interactive=false;
   charm.scale(p,p.scale.x,scaleBy(p.scale.y,0.5),120).onComplete=function ()
   {
-      if(cardA.isFlipped&&cardB.isFlipped){
-        console.log("fatom");
+
+      p.putaway=true;
+      if(cardA.putaway&&cardB.putaway){
         currentLevel++;
         cardA=getCard(1);
         cardB=getCard(0);

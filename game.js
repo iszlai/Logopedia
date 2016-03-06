@@ -1,49 +1,49 @@
 //config
 
 var levels=[ {
-  'front':'imgs/card2.png',
-  'backA':'imgs/tyuk.png',
-  'backB':'imgs/konty.png',
+  'front':'s_imgs/card2.png',
+  'backA':'s_imgs/tyuk.png',
+  'backB':'s_imgs/konty.png',
 },
 {
-'front':'imgs/card2.png',
-  'backA':'imgs/pityo.png',
-  'backB':'imgs/csengo.png',
+'front':'s_imgs/card2.png',
+  'backA':'s_imgs/pityo.png',
+  'backB':'s_imgs/csengo.png',
 },
 {
-'front':'imgs/card2.png',
-  'backA':'imgs/kigyo.png',
-  'backB':'imgs/gyufa.png',
+'front':'s_imgs/card2.png',
+  'backA':'s_imgs/kigyo.png',
+  'backB':'s_imgs/gyufa.png',
 },
 {
-'front':'imgs/card2.png',
-  'backA':'imgs/gyongy.png',
-  'backB':'imgs/kagylo.png',
+'front':'s_imgs/card2.png',
+  'backA':'s_imgs/gyongy.png',
+  'backB':'s_imgs/kagylo.png',
 },
 {
-'front':'imgs/card5.png',
-  'backA':'imgs/kutya.png',
-  'backB':'imgs/tolgy.png',
+'front':'s_imgs/card5.png',
+  'backA':'s_imgs/kutya.png',
+  'backB':'s_imgs/tolgy.png',
 },
 {
-'front':'imgs/card5.png',
-  'backA':'imgs/pitypang.png',
-  'backB':'imgs/meggy.png',
+'front':'s_imgs/card5.png',
+  'backA':'s_imgs/pitypang.png',
+  'backB':'s_imgs/meggy.png',
 },
 {
-'front':'imgs/card5.png',
-  'backA':'imgs/kesztyu.png',
-  'backB':'imgs/gyuru.png',
+'front':'s_imgs/card5.png',
+  'backA':'s_imgs/kesztyu.png',
+  'backB':'s_imgs/gyuru.png',
 },
 {
-'front':'imgs/card5.png',
-  'backA':'imgs/mond1.png',
-  'backB':'imgs/mond2.png',
+'front':'s_imgs/card5.png',
+  'backA':'s_imgs/mond1.png',
+  'backB':'s_imgs/mond2.png',
 },
 {
-'front':'imgs/card5.png',
-  'backA':'imgs/mond3.png',
-  'backB':'imgs/mond4.png',
+'front':'s_imgs/card5.png',
+  'backA':'s_imgs/mond3.png',
+  'backB':'s_imgs/mond4.png',
 }];
 
 function getImgs(){
@@ -64,8 +64,8 @@ resources = PIXI.loader.resources,
 TextureCache = PIXI.utils.TextureCache,
 Texture = PIXI.Texture,
 Sprite = PIXI.Sprite;
-CARD_BASE="imgs/card2.png";
-CARD_LEVEL="imgs/card5.png";
+CARD_BASE="s_imgs/card2.png";
+CARD_LEVEL="s_imgs/card5.png";
 SCREEN_W=1024;
 SCREEN_H=768;
 charm = new Charm(PIXI);

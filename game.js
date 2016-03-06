@@ -88,7 +88,7 @@ loader
 //Define variables that might be used in more
 //than one function
 
-var cardA,cardB,sprite_animation,plier,card_to_filp;
+var cardA,cardB,sprite_animationA,sprite_animationB,plier,card_to_filp;
 
 
 
@@ -106,9 +106,11 @@ function gameLoop() {
 
   //Loop this function at 60 frames per second
   requestAnimationFrame(gameLoop);
+  flipA(card_to_filp)
+  flipB(card_to_filp)
   charm.update();
 
-  flip(card_to_filp)
+
   //Render the stage to see the animation
   renderer.render(stage);
 }
@@ -161,7 +163,7 @@ function getRightXY(width,height){
 function onButtonDown(p){
 
 if(!p.isFlipped){
-  sprite_animation=true;
+  setSpriteAnimation(p);
   plier=-1;
   card_to_filp=p;
   p.isFlipped=true;
@@ -186,6 +188,14 @@ if(!p.isFlipped){
 }
 }
 
+function setSpriteAnimation(p){
+    if (p==cardA){
+      sprite_animationA=true;
+    }else {
+      sprite_animationB=true;
+    }
+}
+
 function scaleBy(current,factor){
   return current*factor;
 }
@@ -195,26 +205,52 @@ function getWaypoints(p){
 }
 
 
-function flip(sprite){
+function flipA(sprite){
 
 
-  if(sprite_animation){
+  if(sprite_animationA){
 
-    if(plier > 0 && sprite.scale.x >0.83){
-      sprite_animation=false;
+    if(plier > 0 && cardA.scale.x >0.83){
+      sprite_animationA=false;
     }
 
-    if(sprite.scale.x<0){
+    if(cardA.scale.x<0){
       plier=1;
-      sprite.texture=sprite.otherside ;
+      cardA.texture=cardA.otherside ;
     }
 
-    sprite.scale.x+=plier*0.1;
+    cardA.scale.x+=plier*0.1;
     //  sprite.y-=0.5;
 
   }
 
 }
+
+
+
+function flipB(sprite){
+
+
+  if(sprite_animationB){
+
+    if(plier > 0 && cardB.scale.x >0.83){
+      sprite_animationB=false;
+    }
+
+    if(cardB.scale.x<0){
+      plier=1;
+      cardB.texture=cardB.otherside ;
+    }
+
+    cardB.scale.x+=plier*0.1;
+    //  sprite.y-=0.5;
+
+  }
+
+}
+
+
+
 function partial(func /*, 0..n args */) {
   var args = Array.prototype.slice.call(arguments, 1);
   return function() {

@@ -88,7 +88,7 @@ loader
 //Define variables that might be used in more
 //than one function
 
-var cardA,cardB,sprite_animationA,sprite_animationB,plier,card_to_filp;
+var cardA,cardB,sprite_animationA,sprite_animationB,plierA,plierB,card_to_filp;
 
 
 
@@ -164,7 +164,6 @@ function onButtonDown(p){
 
 if(!p.isFlipped){
   setSpriteAnimation(p);
-  plier=-1;
   card_to_filp=p;
   p.isFlipped=true;
 
@@ -191,8 +190,10 @@ if(!p.isFlipped){
 function setSpriteAnimation(p){
     if (p==cardA){
       sprite_animationA=true;
+      plierA=-1;
     }else {
       sprite_animationB=true;
+      plierB=-1;
     }
 }
 
@@ -210,16 +211,16 @@ function flipA(sprite){
 
   if(sprite_animationA){
 
-    if(plier > 0 && cardA.scale.x >0.83){
+    if(plierA > 0 && cardA.scale.x >0.83){
       sprite_animationA=false;
     }
 
     if(cardA.scale.x<0){
-      plier=1;
+      plierA=1;
       cardA.texture=cardA.otherside ;
     }
 
-    cardA.scale.x+=plier*0.1;
+    cardA.scale.x+=plierA*0.1;
     //  sprite.y-=0.5;
 
   }
@@ -233,16 +234,16 @@ function flipB(sprite){
 
   if(sprite_animationB){
 
-    if(plier > 0 && cardB.scale.x >0.83){
+    if(plierB > 0 && cardB.scale.x >0.83){
       sprite_animationB=false;
     }
 
     if(cardB.scale.x<0){
-      plier=1;
+      plierB=1;
       cardB.texture=cardB.otherside ;
     }
 
-    cardB.scale.x+=plier*0.1;
+    cardB.scale.x+=plierB*0.1;
     //  sprite.y-=0.5;
 
   }
